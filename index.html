@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
- <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Astonville">
-    <link rel="apple-touch-icon" href="britania-logo.png">  
-<title>Astonville</title>
+<title>Portal Warga RT</title>
+
+<!-- Supabase JS Client SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
   :root {
     --green-dark: #073f2e;
@@ -90,6 +90,8 @@
   .news-title { font-size: 13px; font-weight: 750; margin-top: 4px; }
   .news-desc { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
   .empty { font-size: 12px; color: var(--muted); padding: 6px 0; }
+
+  /* ===== BOTTOM NAVIGATION WITH SCROLL EFX ===== */
   .bottom-nav {
     position: fixed; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: 50%;
     transform: translateX(-50%); width: calc(100% - 28px); max-width: 450px;
@@ -98,6 +100,12 @@
     justify-content: space-around; padding: 9px 7px; border: 1px solid rgba(255,255,255,.82);
     border-radius: 25px; box-shadow: 0 10px 34px rgba(7,63,46,.17), inset 0 1px 0 rgba(255,255,255,.8);
     z-index: 20;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+  }
+  .bottom-nav.nav-hidden {
+    transform: translate(-50%, 120%);
+    opacity: 0;
+    pointer-events: none;
   }
   .nav-btn { position: relative; background: none; border: none; font: inherit; color: #849188;
     font-size: 10px; font-weight: 650; display: flex; flex-direction: column; align-items: center;
@@ -111,6 +119,7 @@
   .nav-btn.nav-add .ico { width: 54px; height: 54px; border-radius: 19px; color: #fff; background: linear-gradient(145deg,#0d754f,#06442f); box-shadow: 0 8px 18px rgba(7,63,46,.28), inset 0 1px 0 rgba(255,255,255,.28); border: 3px solid rgba(255,255,255,.92); }
   .nav-btn.nav-add .ico svg { width: 27px; height: 27px; }
   .nav-btn.nav-add:active .ico { transform: scale(.94); }
+
   .calendar-days { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .day-card { border:1px solid #e8eee9; border-radius:16px; padding:12px 10px; min-width:0; background:#fff; }
   .day-card.today { background:#f5fbf6; border-color:#dcefe1; }
@@ -126,11 +135,13 @@
   .calendar-event.security { background:#eaf0ff; border-left-color:#a8bce9; color:#53678f; }
   .calendar-event strong { display:block; font-size:10px; margin-bottom:2px; }
   .calendar-empty { color:#9aa69e; font-size:10px; line-height:1.4; padding:5px 1px; }
+
   .profile-panel { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
   .profile-avatar { width:66px;height:66px;border-radius:22px;background:#dff5e5;color:#0b5a3e;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:800;overflow:hidden;flex-shrink:0; }
   .profile-avatar img { width:100%;height:100%;object-fit:cover; }
   .profile-action { display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 0;border:0;border-top:1px solid var(--line);background:none;text-align:left;font:inherit;cursor:pointer;gap:12px; }
   .profile-action strong {display:block;font-size:13px}.profile-action small {display:block;color:var(--muted);font-size:11px;margin-top:3px}
+  
   .upload-modal { position:fixed; inset:0; background:rgba(8,29,20,.42); z-index:40; display:none; align-items:flex-end; justify-content:center; padding:16px; }
   .upload-modal.open {display:flex}
   .upload-sheet {width:100%;max-width:450px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-radius:25px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
@@ -140,13 +151,34 @@
   .modal-actions {display:flex;gap:9px;margin-top:15px}.modal-actions button {flex:1;border:0;border-radius:12px;padding:12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
   .btn-cancel {background:#edf1ee;color:#506057}.btn-upload {background:#0d6b49;color:#fff}
   .profile-note {font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
-  @media (max-width: 360px) { .header h1 { font-size: 23px; } .container { padding: 0 12px; } .card { padding: 14px; } .menu-icon { width: 47px; height: 47px; } .menu-item { font-size: 10px; } .bottom-nav {width:calc(100% - 18px);padding-left:3px;padding-right:3px}.nav-btn{font-size:9px}.nav-btn.nav-add .ico{width:49px;height:49px}.calendar-days{gap:7px}.day-card{padding:9px 7px} }
-  .soon { text-align: center; padding: 90px 20px; color: var(--muted); }
-  .soon .big { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 20px; display:flex; align-items:center; justify-content:center; background: var(--green-dark); color: var(--green-bright); }
-  .soon .big svg { width: 30px; height: 30px; }
-  @media (max-width: 360px) { .header h1 { font-size: 23px; } .container { padding: 0 12px; } .card { padding: 14px; } .menu-icon { width: 47px; height: 47px; } .menu-item { font-size: 10px; } }
 
-  /* ===== IURAN: rekap lintas tahun (home tetap tidak diubah) ===== */
+  /* ===== AUTH OVERLAY MODAL ===== */
+  #auth-overlay {
+    position: fixed; inset: 0; background: rgba(7, 63, 46, 0.96); z-index: 999;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    backdrop-filter: blur(12px);
+  }
+  .auth-card {
+    background: #ffffff; width: 100%; max-width: 380px; border-radius: 24px;
+    padding: 24px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  .auth-title { font-size: 20px; font-weight: 800; color: var(--green-dark); text-align: center; }
+  .auth-sub { font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px; margin-bottom: 20px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: 11px; font-weight: 750; margin-bottom: 5px; color: var(--text); }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
+    font: inherit; font-size: 13px; background: #f9fbf9; outline: none;
+  }
+  .form-group input:focus { border-color: var(--green); background: #fff; }
+  .auth-btn {
+    width: 100%; padding: 13px; border: 0; border-radius: 12px; background: var(--green);
+    color: #fff; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; margin-top: 10px;
+  }
+  .auth-toggle { text-align: center; margin-top: 16px; font-size: 12px; color: var(--muted); }
+  .auth-toggle a { color: var(--green); font-weight: 750; text-decoration: none; }
+
+  /* ===== REKAP IPL ===== */
   .ipl-hero { background:linear-gradient(135deg,#073f2e,#0d6b49);color:#fff;border-radius:22px;padding:20px;box-shadow:var(--shadow);margin-bottom:14px; }
   .ipl-hero .eyebrow {font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:700}
   .ipl-hero .big-amount {font-size:27px;font-weight:800;letter-spacing:-.04em;margin:6px 0}
@@ -178,12 +210,60 @@
   .ipl-history-amount{font-size:12px;font-weight:800;white-space:nowrap}
   .ipl-note{padding:12px;border-radius:13px;background:#f1f6f2;color:#65736a;font-size:11px;line-height:1.5;margin-top:12px}
   .ipl-upload-cta{width:100%;border:0;background:#0d6b49;color:#fff;padding:14px;border-radius:14px;font-weight:800;margin-top:14px}
+  
+  .soon { text-align: center; padding: 90px 20px; color: var(--muted); }
+  .soon .big { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 20px; display:flex; align-items:center; justify-content:center; background: var(--green-dark); color: var(--green-bright); }
+  .soon .big svg { width: 30px; height: 30px; }
+  @media (max-width: 360px) { .header h1 { font-size: 23px; } .container { padding: 0 12px; } .card { padding: 14px; } .menu-icon { width: 47px; height: 47px; } .menu-item { font-size: 10px; } .bottom-nav {width:calc(100% - 18px);padding-left:3px;padding-right:3px}.nav-btn{font-size:9px}.nav-btn.nav-add .ico{width:49px;height:49px}.calendar-days{gap:7px}.day-card{padding:9px 7px} }
   @media(max-width:380px){.ipl-month-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ipl-stat{padding:8px}.ipl-stat strong{font-size:15px}}
-
 </style>
-   
 </head>
 <body>
+
+<!-- ============ MODAL AUTH (LOGIN & SIGN UP) ============ -->
+<div id="auth-overlay">
+  <div class="auth-card" id="card-login">
+    <div class="auth-title">Portal Warga</div>
+    <div class="auth-sub">Masukkan ID Blok & PIN Anda</div>
+    <form id="form-login">
+      <div class="form-group">
+        <label for="login-blok">ID Blok / Nomor Rumah</label>
+        <input type="text" id="login-blok" placeholder="Contoh: AA/01" required uppercase>
+      </div>
+      <div class="form-group">
+        <label for="login-pin">PIN Keamanan (6 Digit)</label>
+        <input type="password" id="login-pin" maxlength="6" placeholder="******" required>
+      </div>
+      <button type="submit" class="auth-btn">Masuk Portal</button>
+    </form>
+    <div class="auth-toggle">
+      Belum membuat PIN? <a href="javascript:void(0)" onclick="toggleAuth('signup')">Aktivasi Akun / Sign Up</a>
+    </div>
+  </div>
+
+  <div class="auth-card hidden" id="card-signup">
+    <div class="auth-title">Aktivasi Akun Warga</div>
+    <div class="auth-sub">Daftarkan PIN untuk akses pertama kali</div>
+    <form id="form-signup">
+      <div class="form-group">
+        <label for="signup-blok">ID Blok / Nomor Rumah</label>
+        <input type="text" id="signup-blok" placeholder="Contoh: AA/01" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-hp">Nomor WhatsApp / HP</label>
+        <input type="tel" id="signup-hp" placeholder="08123456789" required>
+      </div>
+      <div class="form-group">
+        <label for="signup-pin">Buat PIN Baru (6 Digit)</label>
+        <input type="password" id="signup-pin" maxlength="6" placeholder="******" required>
+      </div>
+      <button type="submit" class="auth-btn">Simpan PIN & Sign Up</button>
+    </form>
+    <div class="auth-toggle">
+      Sudah punya PIN? <a href="javascript:void(0)" onclick="toggleAuth('login')">Kembali ke Login</a>
+    </div>
+  </div>
+</div>
 
 <!-- ============ BERANDA ============ -->
 <section id="view-home">
@@ -192,7 +272,7 @@
       <div>
         <div class="title" id="today-label"></div>
         <h1 id="greeting">Halo, Warga</h1>
-        <div class="sub">RT 05 / RW 02 · Blok C No. 12</div>
+        <div class="sub" id="user-sub-header">RT 05 / RW 02 · Blok C No. 12</div>
       </div>
       <div class="avatar" id="avatar">B</div>
     </div>
@@ -275,7 +355,7 @@
   </div>
 </section>
 
-<!-- ============ PLACEHOLDER ============ -->
+<!-- ============ SEKSI LAINNYA ============ -->
 <section id="view-iuran" class="hidden">
   <div class="header"><div class="top"><div><div class="title">Keuangan lingkungan</div><h1>Iuran IPL</h1><div class="sub">Rekap pembayaran dari awal program hingga sekarang</div></div></div></div>
   <div class="container">
@@ -295,31 +375,31 @@
     <div class="ipl-month-grid" id="ipl-month-grid"></div>
     <div class="ipl-section-title"><h3>Riwayat transaksi</h3><span class="sub" style="font-size:10px">Terbaru di atas</span></div>
     <div class="card" id="ipl-history-list"></div>
-    <div class="ipl-note"><strong>Catatan:</strong> Tampilan ini adalah prototipe antarmuka. Agar rekap 2025 benar-benar muncul, transaksi tahun 2025 perlu dimasukkan/ditautkan ke data transaksi utama dan fungsi Google Apps Script harus mengirimkan data lintas tahun. Transfer yang belum teridentifikasi sebaiknya tidak otomatis dianggap lunas sebelum dicocokkan dengan rumah dan bulan peruntukannya.</div>
     <button class="ipl-upload-cta" type="button" id="ipl-open-upload">＋ Unggah bukti pembayaran</button>
   </div>
 </section>
+
 <section id="view-surat" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 4v4h4M9 13h6" stroke="currentColor" stroke-width="1.8"/></svg></div>Permohonan Surat<br>segera hadir</div></section>
 <section id="view-jadwal" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16" stroke="currentColor" stroke-width="1.8"/></svg></div>Kalender Jadwal<br>segera hadir</div></section>
 <section id="view-info" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14V9.5a1.5 1.5 0 0 1 1.5-1.5H9l8-4v16l-8-4H5.5A1.5 1.5 0 0 1 4 14Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>Info Lingkungan<br>segera hadir</div></section>
+
 <section id="view-notifikasi" class="hidden">
   <div class="header"><div class="top"><div><div class="title">Pusat informasi</div><h1>Notifikasi</h1><div class="sub">Info penting dari lingkungan Anda</div></div></div></div>
-  <div class="container"><div class="card"><div class="item"><div class="dot" style="background:#fff2d9;color:#9a702b">!</div><div class="item-main"><div class="item-title">Pengingat pembayaran IPL</div><div class="item-desc">Periksa status tagihan dan unggah bukti pembayaran Anda.</div></div></div><div class="item"><div class="dot" style="background:#e5f4e8;color:#39764d">✓</div><div class="item-main"><div class="item-title">Informasi lingkungan</div><div class="item-desc">Jadwal taman dan pengambilan sampah dapat dilihat di Beranda.</div></div></div></div></div>
+  <div class="container"><div class="card"><div class="item"><div class="dot" style="background:#fff2d9;color:#9a702b">!</div><div class="item-main"><div class="item-title">Pengingat pembayaran IPL</div><div class="item-desc">Periksa status tagihan dan unggah bukti pembayaran Anda.</div></div></div></div></div>
 </section>
+
 <section id="view-profil" class="hidden">
   <div class="header"><div class="top"><div><div class="title">Akun warga</div><h1>Profil saya</h1><div class="sub">Kelola informasi akun Anda</div></div></div></div>
   <div class="container">
     <div class="card">
       <div class="profile-panel"><div class="profile-avatar" id="profile-avatar">B</div><div><div class="item-title" id="profile-name">Budi Santoso</div><div class="item-desc" id="profile-unit">Blok C No. 12 · RT 05 / RW 02</div></div></div>
-      <label class="profile-action"><span><strong>Ganti foto profil</strong><small>Pilih foto dari perangkat Anda</small></span><span>›</span><input id="profile-photo-input" type="file" accept="image/*" hidden></label>
-      <button class="profile-action" data-action="pin" style="color:inherit"><span><strong>Ganti PIN</strong><small>Perbarui PIN keamanan akun</small></span><span>›</span></button>
-      <button class="profile-action" data-action="edit-profile" style="color:inherit"><span><strong>Data warga</strong><small>Nama dan alamat tempat tinggal</small></span><span>›</span></button>
-      <div class="profile-note">Fitur profil ini masih berupa prototipe. Perubahan PIN dan data warga belum tersimpan ke server.</div>
+      <button class="profile-action" id="btn-logout" style="color:var(--danger)"><span><strong>Keluar Akun (Logout)</strong><small>Akhiri sesi pada perangkat ini</small></span><span>›</span></button>
     </div>
   </div>
 </section>
 
-<nav class="bottom-nav" aria-label="Navigasi utama">
+<!-- ============ NAVIGATION BAR ============ -->
+<nav class="bottom-nav" id="bottomNav" aria-label="Navigasi utama">
   <button class="nav-btn active" data-goto="home" aria-label="Beranda"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Home</button>
   <button class="nav-btn" data-goto="iuran"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M7 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Iuran</button>
   <button class="nav-btn nav-add" id="open-upload" aria-label="Upload bukti pembayaran"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span>Upload</span></button>
@@ -327,175 +407,183 @@
   <button class="nav-btn" data-goto="profil"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Profil</button>
 </nav>
 
-<div class="upload-modal" id="upload-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
+<!-- ============ MODAL UPLOAD ============ -->
+<div class="upload-modal" id="upload-modal" role="dialog" aria-modal="true">
   <div class="upload-sheet">
     <h2 id="upload-title">Upload bukti pembayaran</h2>
-    <p>Unggah foto atau screenshot bukti transfer IPL. File hanya dipilih di prototipe ini dan belum dikirim ke server.</p>
+    <p>Unggah foto atau screenshot bukti transfer IPL.</p>
     <label class="upload-drop">＋<br><strong>Pilih bukti pembayaran</strong><input id="payment-proof" type="file" accept="image/*,.pdf"></label>
     <div id="upload-file-name" class="profile-note">Format gambar atau PDF.</div>
-    <div class="modal-actions"><button class="btn-cancel" id="close-upload">Batal</button><button class="btn-upload" id="confirm-upload">Pilih file</button></div>
+    <div class="modal-actions"><button class="btn-cancel" id="close-upload">Batal</button><button class="btn-upload" id="confirm-upload">Kirim File</button></div>
   </div>
 </div>
 
 <script>
-  // ===== DATA DUMMY (nanti diganti query Supabase) =====
+  // ===== 1. SUPABASE CLIENT CONFIGURATION =====
+  const SUPABASE_URL = "https://YOUR-SUPABASE-PROJECT-ID.supabase.co"; // Ganti dengan Project URL Anda
+  const SUPABASE_KEY = "YOUR-SUPABASE-ANON-KEY"; // Ganti dengan Anon Key Anda
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ===== 2. AUTO-HIDE BOTTOM NAVIGATION ON SCROLL (FB STYLE) =====
+  let lastScrollTop = 0;
+  const bottomNav = document.getElementById("bottomNav");
+
+  window.addEventListener("scroll", () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop < 0) return; // Prevent iOS bounce effect
+
+    if (scrollTop > lastScrollTop && scrollTop > 50) {
+      // Scroll Kebawah -> Sembunyikan Nav
+      bottomNav.classList.add("nav-hidden");
+    } else {
+      // Scroll Keatas -> Tampilkan Nav
+      bottomNav.classList.remove("nav-hidden");
+    }
+    lastScrollTop = scrollTop;
+  }, { passive: true });
+
+  // ===== 3. AUTHENTICATION LOGIC (SUPABASE) =====
+  function toggleAuth(view) {
+    document.getElementById("card-login").classList.toggle("hidden", view !== 'login');
+    document.getElementById("card-signup").classList.toggle("hidden", view !== 'signup');
+  }
+
+  // Cek Sesi Login Saat Halaman Dimuat
+  window.addEventListener("load", async () => {
+    const savedUser = localStorage.getItem("warga_session");
+    if (savedUser) {
+      document.getElementById("auth-overlay").classList.add("hidden");
+      const user = JSON.parse(savedUser);
+      updateUserUI(user);
+    }
+  });
+
+  // Handle Form Sign Up
+  document.getElementById("form-signup").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const idBlok = document.getElementById("signup-blok").value.trim().toUpperCase();
+    const noHp = document.getElementById("signup-hp").value.trim();
+    const pin = document.getElementById("signup-pin").value.trim();
+
+    try {
+      // Cek apakah data ID Blok ada di master profiles
+      const { data: profile, error } = await _supabase
+        .from('profiles')
+        .select('*')
+        .eq('id_blok', idBlok)
+        .single();
+
+      if (error || !profile) {
+        alert("ID Blok (" + idBlok + ") tidak ditemukan! Hubungi Pengurus RT.");
+        return;
+      }
+
+      if (profile.is_registered) {
+        alert("Akun untuk ID Blok " + idBlok + " sudah pernah didaftarkan. Silakan login.");
+        toggleAuth('login');
+        return;
+      }
+
+      // Format email buatan internal Supabase (berbasis ID Blok)
+      const internalEmail = `${idBlok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      
+      const { data: authData, error: authError } = await _supabase.auth.signUp({
+        email: internalEmail,
+        password: pin,
+      });
+
+      if (authError) throw authError;
+
+      // Update tabel profiles
+      await _supabase
+        .from('profiles')
+        .update({ 
+          user_id: authData.user.id, 
+          no_hp: noHp, 
+          is_registered: true 
+        })
+        .eq('id_blok', idBlok);
+
+      alert("Aktivasi Akun Berhasil! Silakan Login menggunakan ID Blok & PIN Anda.");
+      toggleAuth('login');
+    } catch (err) {
+      alert("Gagal Sign Up: " + err.message);
+    }
+  });
+
+  // Handle Form Login
+  document.getElementById("form-login").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const idBlok = document.getElementById("login-blok").value.trim().toUpperCase();
+    const pin = document.getElementById("login-pin").value.trim();
+
+    try {
+      const internalEmail = `${idBlok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      
+      const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
+        email: internalEmail,
+        password: pin,
+      });
+
+      if (authError) throw new Error("PIN Keamanan atau ID Blok salah!");
+
+      // Ambil Profil Warga
+      const { data: profile } = await _supabase
+        .from('profiles')
+        .select('*')
+        .eq('id_blok', idBlok)
+        .single();
+
+      localStorage.setItem("warga_session", JSON.stringify(profile));
+      document.getElementById("auth-overlay").classList.add("hidden");
+      updateUserUI(profile);
+    } catch (err) {
+      alert(err.message);
+    }
+  });
+
+  // Logout
+  document.getElementById("btn-logout")?.addEventListener("click", async () => {
+    if (confirm("Apakah Anda yakin ingin keluar?")) {
+      await _supabase.auth.signOut();
+      localStorage.removeItem("warga_session");
+      location.reload();
+    }
+  });
+
+  function updateUserUI(user) {
+    document.getElementById("greeting").textContent = "Halo, " + user.nama_penghuni.split(" ")[0];
+    document.getElementById("user-sub-header").textContent = "Blok " + user.id_blok + " · " + user.status_kepemilikan;
+    document.getElementById("ipl-unit").textContent = "Blok " + user.id_blok;
+    document.getElementById("avatar").textContent = user.nama_penghuni.charAt(0);
+    document.getElementById("profile-name").textContent = user.nama_penghuni;
+    document.getElementById("profile-unit").textContent = "Blok " + user.id_blok;
+    document.getElementById("profile-avatar").textContent = user.nama_penghuni.charAt(0);
+  }
+
+  // ===== DATA DUMMY PORTAL =====
   const DATA = {
-    warga: { nama: "Budi Santoso", blok: "Blok C No. 12" },
-    ipl: { nominal: 150000, periode: "Oktober 2026", jatuhTempo: "10 Okt", status: "belum" },
     jadwal: [
       { tanggal: "2026-10-16", jenis: "sampah", judul: "Pengambilan sampah", detail: "Blok A–C, pisahkan organik & anorganik" },
-      { tanggal: "2026-10-16", jenis: "security", judul: "Piket security malam", detail: "Pak Dedi · Pos utama" },
-      { tanggal: "2026-10-17", jenis: "taman", judul: "Petugas taman", detail: "Pak Asep · Taman RT" },
-      { tanggal: "2026-10-17", jenis: "security", judul: "Piket security malam", detail: "Pak Rian · Pos utama" }
+      { tanggal: "2026-10-16", jenis: "security", judul: "Piket security malam", detail: "Pak Dedi · Pos utama" }
     ],
     permohonan: [
-      { id: "SRT-2026-014", jenis: "Surat Domisili", status: "diproses" },
-      { id: "SRT-2026-009", jenis: "Surat Pengantar RT", status: "selesai" }
+      { id: "SRT-2026-014", jenis: "Surat Domisili", status: "diproses" }
     ],
     news: [
-      { tanggal: "14 Okt 2026", judul: "Kerja bakti minggu ini", isi: "Membersihkan selokan Sabtu pukul 07.00. Bawa alat masing-masing." },
-      { tanggal: "10 Okt 2026", judul: "Pengumuman IPL Oktober", isi: "Pembayaran IPL jatuh tempo tanggal 10. Upload bukti bayar lewat portal." }
+      { tanggal: "14 Okt 2026", judul: "Kerja bakti minggu ini", isi: "Membersihkan selokan Sabtu pukul 07.00. Bawa alat masing-masing." }
     ]
   };
 
-  const ICONS = {
-    sampah: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 10v7M14 10v7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    taman: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-8M12 14C6 14 4 10 5 6c4 0 7 2 7 7M12 11c0-5 3-8 7-8 1 5-1 8-7 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    security: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="#a9f2bd" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-  };
-  const STATUS_SURAT = {
-    diajukan: { label: "Diajukan", cls: "menunggu" },
-    diproses: { label: "Diproses", cls: "menunggu" },
-    selesai:  { label: "Selesai",  cls: "lunas" }
-  };
-
-  const rupiah = n => "Rp " + n.toLocaleString("id-ID");
   const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const ymd = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
 
   function renderHeader() {
     const now = new Date();
-    const jam = now.getHours();
-    const sapaan = jam < 11 ? "Selamat pagi" : jam < 15 ? "Selamat siang" : jam < 18 ? "Selamat sore" : "Selamat malam";
-    document.getElementById("greeting").textContent = sapaan + ", " + DATA.warga.nama.split(" ")[0];
     document.getElementById("today-label").textContent = now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-    document.getElementById("avatar").textContent = DATA.warga.nama.charAt(0);
   }
 
-  function renderIpl() {
-    const ipl = DATA.ipl;
-    document.getElementById("ipl-total").textContent = rupiah(ipl.nominal);
-    document.getElementById("ipl-row-value").textContent = rupiah(ipl.nominal);
-    document.getElementById("ipl-unit").textContent = DATA.warga.blok;
-    document.getElementById("ipl-period").textContent = ipl.periode + " · jatuh tempo " + ipl.jatuhTempo;
-    const badge = document.getElementById("ipl-badge");
-    const map = { lunas: ["lunas", "Lunas"], menunggu: ["menunggu", "Menunggu verifikasi"], belum: ["belum", "Belum bayar"] };
-    badge.className = "badge " + map[ipl.status][0];
-    badge.textContent = map[ipl.status][1];
-  }
-
-
-  // ===== REKAP IPL LINTAS TAHUN (contoh UI; belum tersambung ke Google Apps Script) =====
-  const IPL_MONTHS_ID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  const IPL_DEMO = {
-    2025: { paid: [], pending: [], transactions: [] },
-    2026: { paid: [], pending: [], transactions: [] }
-  };
-  function renderIuranHistory() {
-    const filter = document.getElementById("ipl-year-filter");
-    if (!filter) return;
-    const years = Object.keys(IPL_DEMO).map(Number).sort((a,b)=>b-a);
-    filter.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join("");
-    filter.value = String(new Date().getFullYear() in IPL_DEMO ? new Date().getFullYear() : years[0]);
-    const list = document.getElementById("ipl-year-list");
-    list.innerHTML = years.slice().reverse().map(year => {
-      const item = IPL_DEMO[year], paid = item.paid.length, pending = item.pending.length;
-      const pct = Math.round(paid/12*100);
-      const label = pending ? "Menunggu verifikasi" : paid === 12 ? "Lunas" : paid ? "Sebagian lunas" : "Data perlu dilengkapi";
-      const chip = pending ? "warn" : paid === 12 ? "good" : "neutral";
-      return `<div class="ipl-year-card">
-        <div class="ipl-year-top"><div><strong>Tahun ${year}</strong><small>${year===2025?"Tahun pertama IPL":"Tahun berjalan/berikutnya"}</small></div><span class="ipl-chip ${chip}">${label}</span></div>
-        <div class="ipl-progress"><span style="width:${pct}%"></span></div>
-        <div class="ipl-year-foot"><span>${paid}/12 bulan lunas</span><span>${pending} bulan menunggu</span></div>
-      </div>`;
-    }).join("");
-    const current = Number(filter.value);
-    const data = IPL_DEMO[current];
-    document.getElementById("ipl-month-grid").innerHTML = IPL_MONTHS_ID.map((m,i)=>{
-      const n=i+1, state=data.paid.includes(n)?"paid":data.pending.includes(n)?"pending":"unpaid";
-      const txt=state==="paid"?"Lunas":state==="pending"?"Menunggu":"Belum tercatat";
-      return `<div class="ipl-month ${state}"><strong>${m}</strong><span>${txt}</span></div>`;
-    }).join("");
-    const allPaid=years.reduce((sum,y)=>sum+IPL_DEMO[y].paid.length,0);
-    const allPending=years.reduce((sum,y)=>sum+IPL_DEMO[y].pending.length,0);
-    document.getElementById("ipl-years-count").textContent=years.length;
-    document.getElementById("ipl-paid-count").textContent=allPaid;
-    document.getElementById("ipl-outstanding-count").textContent=years.length*12-allPaid-allPending;
-    document.getElementById("ipl-history-total").textContent=rupiah(0);
-    document.getElementById("ipl-history-address").textContent=(DATA.warga.blok||"Blok belum diatur")+" · Rekap 2025–"+Math.max(...years);
-    const tx=years.flatMap(y=>IPL_DEMO[y].transactions).sort((a,b)=>b.date.localeCompare(a.date));
-    document.getElementById("ipl-history-list").innerHTML=tx.length?tx.map(t=>`<div class="ipl-history-row"><div class="ipl-history-icon">✓</div><div class="ipl-history-main"><strong>${esc(t.title)}</strong><small>${esc(t.date)} · ${esc(t.note||"Pembayaran IPL")}</small></div><div class="ipl-history-amount">${rupiah(t.amount)}</div></div>`).join(""):'<div class="item-desc" style="padding:14px 2px">Belum ada transaksi yang ditampilkan pada prototipe. Riwayat akan muncul setelah data transaksi dihubungkan ke sistem.</div>';
-  }
-  document.addEventListener("change", ev => {
-    if (ev.target && ev.target.id === "ipl-year-filter") renderIuranMonthsOnly(Number(ev.target.value));
-  });
-  function renderIuranMonthsOnly(year) {
-    const data=IPL_DEMO[year]; if(!data)return;
-    document.getElementById("ipl-month-grid").innerHTML=IPL_MONTHS_ID.map((m,i)=>{
-      const n=i+1, state=data.paid.includes(n)?"paid":data.pending.includes(n)?"pending":"unpaid";
-      return `<div class="ipl-month ${state}"><strong>${m}</strong><span>${state==="paid"?"Lunas":state==="pending"?"Menunggu":"Belum tercatat"}</span></div>`;
-    }).join("");
-  }
-
-  function renderJadwal() {
-    const today = new Date();
-    const tomorrow = new Date(); tomorrow.setDate(today.getDate() + 1);
-    const fmtDay = d => d.toLocaleDateString("id-ID", { day: "numeric" });
-    const fmtMonth = d => d.toLocaleDateString("id-ID", { month: "short" });
-    const fmtLong = d => d.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "short" });
-    const days = [
-      { date: today, label: "Hari ini", cls: "today", tile: "" },
-      { date: tomorrow, label: "Besok", cls: "", tile: "tomorrow" }
-    ];
-    const el = document.getElementById("jadwal-list");
-    el.innerHTML = days.map(day => {
-      const key = ymd(day.date);
-      const items = DATA.jadwal.filter(j => j.tanggal === key);
-      const events = items.length ? items.map(j =>
-        `<div class="calendar-event ${j.jenis === "sampah" ? "sampah" : j.jenis === "security" ? "security" : "taman"}"><strong>${esc(j.judul)}</strong>${esc(j.detail)}</div>`
-      ).join("") : '<div class="calendar-empty">Belum ada jadwal</div>';
-      return `<div class="day-card ${day.cls}">
-        <div class="day-top"><div class="date-tile ${day.tile}"><b>${fmtDay(day.date)}</b><span>${fmtMonth(day.date)}</span></div>
-        <div><div class="day-label">${day.label}</div><div class="day-date">${fmtLong(day.date)}</div></div></div>${events}</div>`;
-    }).join("");
-  }
-
-  function renderPermohonan() {
-    const el = document.getElementById("permohonan-list");
-    if (!DATA.permohonan.length) { el.innerHTML = '<div class="empty">Belum ada permohonan.</div>'; return; }
-    el.innerHTML = DATA.permohonan.map(p => {
-      const s = STATUS_SURAT[p.status];
-      return `<div class="item">
-        <div class="dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 4v4h4M9 13h6M9 16.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-        <div class="item-main">
-          <div class="item-title">${esc(p.jenis)}</div>
-          <div class="item-desc">${esc(p.id)}</div>
-        </div>
-        <span class="badge ${s.cls}">${s.label}</span>
-      </div>`;
-    }).join("");
-  }
-
-  function renderNews() {
-    document.getElementById("news-list").innerHTML = DATA.news.map(n => `
-      <div class="news-item">
-        <div class="news-date">${esc(n.tanggal)}</div>
-        <div class="news-title">${esc(n.judul)}</div>
-        <div class="news-desc">${esc(n.isi)}</div>
-      </div>`).join("");
-  }
-
-  // ===== NAVIGASI =====
+  // ===== NAVIGASI VIEW =====
   const VIEWS = ["home", "iuran", "surat", "jadwal", "info", "notifikasi", "profil"];
   function show(view) {
     VIEWS.forEach(v => document.getElementById("view-" + v)?.classList.toggle("hidden", v !== view));
@@ -509,57 +597,13 @@
     show(el.dataset.goto);
   });
 
-  // ===== AKSI PROTOTIPE =====
+  // Modal Upload Handler
   const uploadModal = document.getElementById("upload-modal");
   document.getElementById("open-upload").addEventListener("click", () => uploadModal.classList.add("open"));
   document.getElementById("close-upload").addEventListener("click", () => uploadModal.classList.remove("open"));
-  uploadModal.addEventListener("click", e => { if (e.target === uploadModal) uploadModal.classList.remove("open"); });
-  document.getElementById("payment-proof").addEventListener("change", e => {
-    const f = e.target.files[0];
-    document.getElementById("upload-file-name").textContent = f ? "File dipilih: " + f.name : "Format gambar atau PDF.";
-    document.getElementById("confirm-upload").textContent = f ? "Siap dipilih" : "Pilih file";
-  });
-  document.getElementById("confirm-upload").addEventListener("click", () => {
-    const f = document.getElementById("payment-proof").files[0];
-    if (!f) { document.getElementById("payment-proof").click(); return; }
-    alert("File '" + f.name + "' sudah dipilih. Pengiriman ke server belum tersedia pada prototipe ini.");
-    uploadModal.classList.remove("open");
-  });
-  const photoInput = document.getElementById("profile-photo-input");
-  photoInput.addEventListener("change", e => {
-    const f = e.target.files[0]; if (!f) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      document.getElementById("profile-avatar").innerHTML = '<img alt="Foto profil" src="' + ev.target.result + '">';
-      document.getElementById("avatar").innerHTML = '<img alt="Foto profil" src="' + ev.target.result + '" style="width:100%;height:100%;object-fit:cover;border-radius:15px">';
-    };
-    reader.readAsDataURL(f);
-  });
-  document.querySelector('[data-action="pin"]').addEventListener("click", () => {
-    const pin = prompt("Masukkan PIN baru (prototipe):");
-    if (pin !== null && pin.trim()) alert("PIN baru dicatat untuk simulasi saja. Belum tersimpan ke server.");
-  });
-  document.querySelector('[data-action="edit-profile"]').addEventListener("click", () => {
-    const nama = prompt("Nama warga:", DATA.warga.nama);
-    if (nama && nama.trim()) {
-      DATA.warga.nama = nama.trim();
-      document.getElementById("profile-name").textContent = DATA.warga.nama;
-      renderHeader();
-    }
-  });
-  document.getElementById("profile-name").textContent = DATA.warga.nama;
-  document.getElementById("profile-unit").textContent = DATA.warga.blok + " · RT 05 / RW 02";
-  document.getElementById("profile-avatar").textContent = DATA.warga.nama.charAt(0);
 
-  document.getElementById("ipl-open-upload")?.addEventListener("click", () => document.getElementById("open-upload")?.click());
-
-  // ===== INIT =====
+  // Init
   renderHeader();
-  renderIpl();
-  renderIuranHistory();
-  renderJadwal();
-  renderPermohonan();
-  renderNews();
 </script>
 </body>
 </html>
