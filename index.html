@@ -427,7 +427,7 @@
         return;
       }
 
-      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.com`;
       
       const { data: authData, error: authError } = await _supabase.auth.signUp({
         email: internalEmail,
@@ -470,7 +470,7 @@
         return;
       }
 
-      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.com`;
       
       const { error: authError } = await _supabase.auth.signInWithPassword({
         email: internalEmail,
