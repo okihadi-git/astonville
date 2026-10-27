@@ -228,7 +228,7 @@
     <form id="form-login">
       <div class="form-group">
         <label for="login-blok">ID Blok / Nomor Rumah</label>
-        <input type="text" id="login-blok" placeholder="Contoh: AA/01" required uppercase>
+        <input type="text" id="login-blok" placeholder="Contoh: AA/01" required>
       </div>
       <div class="form-group">
         <label for="login-pin">PIN Keamanan (6 Digit)</label>
@@ -272,15 +272,13 @@
       <div>
         <div class="title" id="today-label"></div>
         <h1 id="greeting">Halo, Warga</h1>
-        <div class="sub" id="user-sub-header">RT 05 / RW 02 · Blok C No. 12</div>
+        <div class="sub" id="user-sub-header">RT 05 / RW 02 · Aston Ville</div>
       </div>
-      <div class="avatar" id="avatar">B</div>
+      <div class="avatar" id="avatar">W</div>
     </div>
   </div>
 
   <div class="container">
-
-    <!-- Kartu tagihan IPL -->
     <div class="bill-card">
       <div class="bill-head">
         <div>
@@ -293,7 +291,7 @@
       <div class="row">
         <div>
           <div class="row-title">Tagihan IPL</div>
-          <div class="row-sub" id="ipl-unit">Blok C No. 12</div>
+          <div class="row-sub" id="ipl-unit">Pilih ID Blok</div>
         </div>
         <div class="row-value" id="ipl-row-value">Rp 150.000</div>
       </div>
@@ -309,7 +307,6 @@
 
     <button class="btn" data-goto="iuran">Upload bukti bayar</button>
 
-    <!-- Menu -->
     <div class="card">
       <div class="card-title"><span>Menu</span></div>
       <div class="menu-grid">
@@ -320,38 +317,13 @@
       </div>
     </div>
 
-    <!-- Jadwal -->
     <div class="card">
       <div class="card-title">
         <span>Jadwal lingkungan</span>
         <a href="#" data-goto="jadwal">Kalender lengkap</a>
       </div>
       <div class="calendar-days" id="jadwal-list"></div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:10px;color:#75847a">
-        <span><i style="display:inline-block;width:8px;height:8px;border-radius:3px;background:#b8dfc0;margin-right:4px"></i>Taman</span>
-        <span><i style="display:inline-block;width:8px;height:8px;border-radius:3px;background:#f0d39b;margin-right:4px"></i>Sampah</span>
-        <span><i style="display:inline-block;width:8px;height:8px;border-radius:3px;background:#c5d3f4;margin-right:4px"></i>Keamanan</span>
-      </div>
     </div>
-
-    <!-- Permohonan -->
-    <div class="card">
-      <div class="card-title">
-        <span>Permohonan saya</span>
-        <a href="#" data-goto="surat">Ajukan</a>
-      </div>
-      <div id="permohonan-list"></div>
-    </div>
-
-    <!-- Info -->
-    <div class="card">
-      <div class="card-title">
-        <span>Info terbaru</span>
-        <a href="#" data-goto="info">Semua</a>
-      </div>
-      <div id="news-list"></div>
-    </div>
-
   </div>
 </section>
 
@@ -363,36 +335,20 @@
       <div class="eyebrow">Status IPL rumah Anda</div>
       <div class="big-amount" id="ipl-history-total">Rp0</div>
       <div class="hero-meta" id="ipl-history-address">Blok — · Rekap semua tahun</div>
-      <div class="ipl-stat-grid">
-        <div class="ipl-stat"><strong id="ipl-years-count">2</strong><span>Tahun tercatat</span></div>
-        <div class="ipl-stat"><strong id="ipl-paid-count">—</strong><span>Bulan lunas</span></div>
-        <div class="ipl-stat"><strong id="ipl-outstanding-count">—</strong><span>Bulan belum lunas</span></div>
-      </div>
     </div>
-    <div class="ipl-section-title"><h3>Rekap per tahun</h3><span class="sub" style="font-size:10px">Mulai 2025</span></div>
-    <div id="ipl-year-list"></div>
-    <div class="ipl-section-title"><h3>Rincian bulanan</h3><select class="ipl-year-select" id="ipl-year-filter" aria-label="Pilih tahun rekap"></select></div>
-    <div class="ipl-month-grid" id="ipl-month-grid"></div>
-    <div class="ipl-section-title"><h3>Riwayat transaksi</h3><span class="sub" style="font-size:10px">Terbaru di atas</span></div>
-    <div class="card" id="ipl-history-list"></div>
-    <button class="ipl-upload-cta" type="button" id="ipl-open-upload">＋ Unggah bukti pembayaran</button>
   </div>
 </section>
 
-<section id="view-surat" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 4v4h4M9 13h6" stroke="currentColor" stroke-width="1.8"/></svg></div>Permohonan Surat<br>segera hadir</div></section>
-<section id="view-jadwal" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16" stroke="currentColor" stroke-width="1.8"/></svg></div>Kalender Jadwal<br>segera hadir</div></section>
-<section id="view-info" class="hidden"><div class="soon"><div class="big"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14V9.5a1.5 1.5 0 0 1 1.5-1.5H9l8-4v16l-8-4H5.5A1.5 1.5 0 0 1 4 14Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>Info Lingkungan<br>segera hadir</div></section>
-
-<section id="view-notifikasi" class="hidden">
-  <div class="header"><div class="top"><div><div class="title">Pusat informasi</div><h1>Notifikasi</h1><div class="sub">Info penting dari lingkungan Anda</div></div></div></div>
-  <div class="container"><div class="card"><div class="item"><div class="dot" style="background:#fff2d9;color:#9a702b">!</div><div class="item-main"><div class="item-title">Pengingat pembayaran IPL</div><div class="item-desc">Periksa status tagihan dan unggah bukti pembayaran Anda.</div></div></div></div></div>
-</section>
+<section id="view-surat" class="hidden"><div class="soon"><div class="big">✉</div>Permohonan Surat<br>segera hadir</div></section>
+<section id="view-jadwal" class="hidden"><div class="soon"><div class="big">📅</div>Kalender Jadwal<br>segera hadir</div></section>
+<section id="view-info" class="hidden"><div class="soon"><div class="big">📢</div>Info Lingkungan<br>segera hadir</div></section>
+<section id="view-notifikasi" class="hidden"><div class="soon"><div class="big">🔔</div>Belum ada notifikasi baru</div></section>
 
 <section id="view-profil" class="hidden">
   <div class="header"><div class="top"><div><div class="title">Akun warga</div><h1>Profil saya</h1><div class="sub">Kelola informasi akun Anda</div></div></div></div>
   <div class="container">
     <div class="card">
-      <div class="profile-panel"><div class="profile-avatar" id="profile-avatar">B</div><div><div class="item-title" id="profile-name">Budi Santoso</div><div class="item-desc" id="profile-unit">Blok C No. 12 · RT 05 / RW 02</div></div></div>
+      <div class="profile-panel"><div class="profile-avatar" id="profile-avatar">W</div><div><div class="item-title" id="profile-name">Warga Aston Ville</div><div class="item-desc" id="profile-unit">Blok —</div></div></div>
       <button class="profile-action" id="btn-logout" style="color:var(--danger)"><span><strong>Keluar Akun (Logout)</strong><small>Akhiri sesi pada perangkat ini</small></span><span>›</span></button>
     </div>
   </div>
@@ -400,54 +356,40 @@
 
 <!-- ============ NAVIGATION BAR ============ -->
 <nav class="bottom-nav" id="bottomNav" aria-label="Navigasi utama">
-  <button class="nav-btn active" data-goto="home" aria-label="Beranda"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>Home</button>
-  <button class="nav-btn" data-goto="iuran"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M7 15h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Iuran</button>
-  <button class="nav-btn nav-add" id="open-upload" aria-label="Upload bukti pembayaran"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span>Upload</span></button>
-  <button class="nav-btn" data-goto="notifikasi"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Notifikasi</button>
-  <button class="nav-btn" data-goto="profil"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Profil</button>
+  <button class="nav-btn active" data-goto="home"><span class="ico"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Home</button>
+  <button class="nav-btn" data-goto="iuran"><span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M7 15h4" stroke="currentColor" stroke-width="1.8"/></svg></span>Iuran</button>
+  <button class="nav-btn nav-add" id="open-upload"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2"/></svg></span><span>Upload</span></button>
+  <button class="nav-btn" data-goto="notifikasi"><span class="ico"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Notifikasi</button>
+  <button class="nav-btn" data-goto="profil"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 21a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>Profil</button>
 </nav>
 
-<!-- ============ MODAL UPLOAD ============ -->
-<div class="upload-modal" id="upload-modal" role="dialog" aria-modal="true">
-  <div class="upload-sheet">
-    <h2 id="upload-title">Upload bukti pembayaran</h2>
-    <p>Unggah foto atau screenshot bukti transfer IPL.</p>
-    <label class="upload-drop">＋<br><strong>Pilih bukti pembayaran</strong><input id="payment-proof" type="file" accept="image/*,.pdf"></label>
-    <div id="upload-file-name" class="profile-note">Format gambar atau PDF.</div>
-    <div class="modal-actions"><button class="btn-cancel" id="close-upload">Batal</button><button class="btn-upload" id="confirm-upload">Kirim File</button></div>
-  </div>
-</div>
-
 <script>
+  // ===== 1. SUPABASE CLIENT CONFIGURATION =====
   const SUPABASE_URL = "https://zjufyupndlzjocbjgzgu.supabase.co";
   const SUPABASE_KEY = "sb_publishable_vW00WKdxvHwLqnEDiGvSOg_Lo5szIjg";
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // ===== 2. AUTO-HIDE BOTTOM NAVIGATION ON SCROLL (FB STYLE) =====
+  // ===== 2. AUTO-HIDE BOTTOM NAV =====
   let lastScrollTop = 0;
   const bottomNav = document.getElementById("bottomNav");
 
   window.addEventListener("scroll", () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop < 0) return; // Prevent iOS bounce effect
-
+    if (scrollTop < 0) return;
     if (scrollTop > lastScrollTop && scrollTop > 50) {
-      // Scroll Kebawah -> Sembunyikan Nav
       bottomNav.classList.add("nav-hidden");
     } else {
-      // Scroll Keatas -> Tampilkan Nav
       bottomNav.classList.remove("nav-hidden");
     }
     lastScrollTop = scrollTop;
   }, { passive: true });
 
-  // ===== 3. AUTHENTICATION LOGIC (SUPABASE) =====
+  // ===== 3. AUTH LOGIC =====
   function toggleAuth(view) {
     document.getElementById("card-login").classList.toggle("hidden", view !== 'login');
     document.getElementById("card-signup").classList.toggle("hidden", view !== 'signup');
   }
 
-  // Cek Sesi Login Saat Halaman Dimuat
   window.addEventListener("load", async () => {
     const savedUser = localStorage.getItem("warga_session");
     if (savedUser) {
@@ -457,22 +399,24 @@
     }
   });
 
-  // Handle Form Sign Up
+  // Handle Sign Up
   document.getElementById("form-signup").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const idBlok = document.getElementById("signup-blok").value.trim().toUpperCase();
+    const idBlok = document.getElementById("signup-blok").value.trim();
     const noHp = document.getElementById("signup-hp").value.trim();
     const pin = document.getElementById("signup-pin").value.trim();
 
     try {
-      // Cek apakah data ID Blok ada di master profiles
+      // Pencarian fleksibel menggunakan ilike & maybeSingle
       const { data: profile, error } = await _supabase
         .from('profiles')
         .select('*')
-        .eq('id_blok', idBlok)
-        .single();
+        .ilike('id_blok', idBlok)
+        .maybeSingle();
 
-      if (error || !profile) {
+      if (error) throw error;
+
+      if (!profile) {
         alert("ID Blok (" + idBlok + ") tidak ditemukan! Hubungi Pengurus RT.");
         return;
       }
@@ -483,8 +427,7 @@
         return;
       }
 
-      // Format email buatan internal Supabase (berbasis ID Blok)
-      const internalEmail = `${idBlok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.internal`;
       
       const { data: authData, error: authError } = await _supabase.auth.signUp({
         email: internalEmail,
@@ -493,7 +436,6 @@
 
       if (authError) throw authError;
 
-      // Update tabel profiles
       await _supabase
         .from('profiles')
         .update({ 
@@ -501,7 +443,7 @@
           no_hp: noHp, 
           is_registered: true 
         })
-        .eq('id_blok', idBlok);
+        .ilike('id_blok', idBlok);
 
       alert("Aktivasi Akun Berhasil! Silakan Login menggunakan ID Blok & PIN Anda.");
       toggleAuth('login');
@@ -510,28 +452,32 @@
     }
   });
 
-  // Handle Form Login
+  // Handle Login
   document.getElementById("form-login").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const idBlok = document.getElementById("login-blok").value.trim().toUpperCase();
+    const idBlok = document.getElementById("login-blok").value.trim();
     const pin = document.getElementById("login-pin").value.trim();
 
     try {
-      const internalEmail = `${idBlok.replace('/', '_').toLowerCase()}@astonville.internal`;
+      const { data: profile, error: profErr } = await _supabase
+        .from('profiles')
+        .select('*')
+        .ilike('id_blok', idBlok)
+        .maybeSingle();
+
+      if (profErr || !profile) {
+        alert("ID Blok tidak ditemukan!");
+        return;
+      }
+
+      const internalEmail = `${profile.id_blok.replace('/', '_').toLowerCase()}@astonville.internal`;
       
-      const { data: authData, error: authError } = await _supabase.auth.signInWithPassword({
+      const { error: authError } = await _supabase.auth.signInWithPassword({
         email: internalEmail,
         password: pin,
       });
 
-      if (authError) throw new Error("PIN Keamanan atau ID Blok salah!");
-
-      // Ambil Profil Warga
-      const { data: profile } = await _supabase
-        .from('profiles')
-        .select('*')
-        .eq('id_blok', idBlok)
-        .single();
+      if (authError) throw new Error("PIN Keamanan salah!");
 
       localStorage.setItem("warga_session", JSON.stringify(profile));
       document.getElementById("auth-overlay").classList.add("hidden");
@@ -551,35 +497,14 @@
   });
 
   function updateUserUI(user) {
-    document.getElementById("greeting").textContent = "Halo, " + user.nama_penghuni.split(" ")[0];
-    document.getElementById("user-sub-header").textContent = "Blok " + user.id_blok + " · " + user.status_kepemilikan;
+    const namaDisplay = user.nama_penghuni || user.nama_pemilik || "Warga";
+    document.getElementById("greeting").textContent = "Halo, " + namaDisplay.split(" ")[0];
+    document.getElementById("user-sub-header").textContent = "Blok " + user.id_blok + " · " + (user.status_kepemilikan || "Warga");
     document.getElementById("ipl-unit").textContent = "Blok " + user.id_blok;
-    document.getElementById("avatar").textContent = user.nama_penghuni.charAt(0);
-    document.getElementById("profile-name").textContent = user.nama_penghuni;
+    document.getElementById("avatar").textContent = namaDisplay.charAt(0);
+    document.getElementById("profile-name").textContent = namaDisplay;
     document.getElementById("profile-unit").textContent = "Blok " + user.id_blok;
-    document.getElementById("profile-avatar").textContent = user.nama_penghuni.charAt(0);
-  }
-
-  // ===== DATA DUMMY PORTAL =====
-  const DATA = {
-    jadwal: [
-      { tanggal: "2026-10-16", jenis: "sampah", judul: "Pengambilan sampah", detail: "Blok A–C, pisahkan organik & anorganik" },
-      { tanggal: "2026-10-16", jenis: "security", judul: "Piket security malam", detail: "Pak Dedi · Pos utama" }
-    ],
-    permohonan: [
-      { id: "SRT-2026-014", jenis: "Surat Domisili", status: "diproses" }
-    ],
-    news: [
-      { tanggal: "14 Okt 2026", judul: "Kerja bakti minggu ini", isi: "Membersihkan selokan Sabtu pukul 07.00. Bawa alat masing-masing." }
-    ]
-  };
-
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-  const ymd = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-
-  function renderHeader() {
-    const now = new Date();
-    document.getElementById("today-label").textContent = now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    document.getElementById("profile-avatar").textContent = namaDisplay.charAt(0);
   }
 
   // ===== NAVIGASI VIEW =====
@@ -596,13 +521,9 @@
     show(el.dataset.goto);
   });
 
-  // Modal Upload Handler
-  const uploadModal = document.getElementById("upload-modal");
-  document.getElementById("open-upload").addEventListener("click", () => uploadModal.classList.add("open"));
-  document.getElementById("close-upload").addEventListener("click", () => uploadModal.classList.remove("open"));
-
   // Init
-  renderHeader();
+  const now = new Date();
+  document.getElementById("today-label").textContent = now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 </script>
 </body>
 </html>
