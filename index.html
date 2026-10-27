@@ -76,20 +76,6 @@
   .menu-item { min-width: 0; background: none; border: none; cursor: pointer; color: var(--text); font: inherit; font-size: 11px; font-weight: 650; line-height: 1.25; }
   .menu-icon { width: 52px; height: 52px; margin: 0 auto 8px; border-radius: 17px; background: var(--green-dark); display: flex; align-items: center; justify-content: center; color: var(--green-bright); }
   .menu-icon svg { width: 24px; height: 24px; display: block; }
-  .item { display: flex; gap: 11px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
-  .item:first-of-type { border-top: none; padding-top: 0; }
-  .dot { width: 40px; height: 40px; border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--green-dark); color: var(--green-bright); }
-  .dot svg { width: 20px; height: 20px; display: block; }
-  .item-main { flex: 1; min-width: 0; }
-  .item-title { font-size: 13px; font-weight: 750; }
-  .item-desc { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.45; }
-  .tag { font-size: 10px; color: var(--green); font-weight: 700; white-space: nowrap; }
-  .news-item { padding: 12px 0; border-top: 1px solid var(--line); }
-  .news-item:first-of-type { border-top: none; padding-top: 0; }
-  .news-date { font-size: 10px; color: var(--green); font-weight: 750; letter-spacing: .02em; }
-  .news-title { font-size: 13px; font-weight: 750; margin-top: 4px; }
-  .news-desc { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
-  .empty { font-size: 12px; color: var(--muted); padding: 6px 0; }
 
   /* ===== BOTTOM NAVIGATION WITH SCROLL EFX ===== */
   .bottom-nav {
@@ -120,37 +106,10 @@
   .nav-btn.nav-add .ico svg { width: 27px; height: 27px; }
   .nav-btn.nav-add:active .ico { transform: scale(.94); }
 
-  .calendar-days { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .day-card { border:1px solid #e8eee9; border-radius:16px; padding:12px 10px; min-width:0; background:#fff; }
-  .day-card.today { background:#f5fbf6; border-color:#dcefe1; }
-  .day-top { display:flex; align-items:center; gap:8px; margin-bottom:11px; }
-  .date-tile { width:39px; height:43px; border-radius:11px; background:#e4f4e8; color:#286744; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
-  .date-tile.tomorrow { background:#e9efff; color:#4965a5; }
-  .date-tile b { font-size:16px; line-height:1.1; }
-  .date-tile span { font-size:8px; text-transform:uppercase; font-weight:800; letter-spacing:.04em; }
-  .day-label { font-size:12px; font-weight:800; }
-  .day-date { font-size:10px; color:var(--muted); margin-top:3px; }
-  .calendar-event { font-size:10px; line-height:1.35; padding:7px 7px 7px 9px; border-radius:9px; margin-top:6px; color:#4d6255; background:#e7f5e9; border-left:3px solid #9bcda6; }
-  .calendar-event.sampah { background:#fff3df; border-left-color:#e8c37c; color:#806331; }
-  .calendar-event.security { background:#eaf0ff; border-left-color:#a8bce9; color:#53678f; }
-  .calendar-event strong { display:block; font-size:10px; margin-bottom:2px; }
-  .calendar-empty { color:#9aa69e; font-size:10px; line-height:1.4; padding:5px 1px; }
-
   .profile-panel { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
   .profile-avatar { width:66px;height:66px;border-radius:22px;background:#dff5e5;color:#0b5a3e;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:800;overflow:hidden;flex-shrink:0; }
-  .profile-avatar img { width:100%;height:100%;object-fit:cover; }
   .profile-action { display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 0;border:0;border-top:1px solid var(--line);background:none;text-align:left;font:inherit;cursor:pointer;gap:12px; }
   .profile-action strong {display:block;font-size:13px}.profile-action small {display:block;color:var(--muted);font-size:11px;margin-top:3px}
-  
-  .upload-modal { position:fixed; inset:0; background:rgba(8,29,20,.42); z-index:40; display:none; align-items:flex-end; justify-content:center; padding:16px; }
-  .upload-modal.open {display:flex}
-  .upload-sheet {width:100%;max-width:450px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-radius:25px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-  .upload-sheet h2 {font-size:19px;margin-bottom:6px}.upload-sheet p {font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:16px}
-  .upload-drop {display:block;border:1.5px dashed #b7d9c1;border-radius:16px;padding:22px 14px;text-align:center;background:#f6fbf7;font-size:12px;color:#53735e;cursor:pointer}
-  .upload-drop input {display:block;width:100%;font-size:11px;margin-top:12px}
-  .modal-actions {display:flex;gap:9px;margin-top:15px}.modal-actions button {flex:1;border:0;border-radius:12px;padding:12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
-  .btn-cancel {background:#edf1ee;color:#506057}.btn-upload {background:#0d6b49;color:#fff}
-  .profile-note {font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
 
   /* ===== AUTH OVERLAY MODAL ===== */
   #auth-overlay {
@@ -178,44 +137,8 @@
   .auth-toggle { text-align: center; margin-top: 16px; font-size: 12px; color: var(--muted); }
   .auth-toggle a { color: var(--green); font-weight: 750; text-decoration: none; }
 
-  /* ===== REKAP IPL ===== */
-  .ipl-hero { background:linear-gradient(135deg,#073f2e,#0d6b49);color:#fff;border-radius:22px;padding:20px;box-shadow:var(--shadow);margin-bottom:14px; }
-  .ipl-hero .eyebrow {font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-weight:700}
-  .ipl-hero .big-amount {font-size:27px;font-weight:800;letter-spacing:-.04em;margin:6px 0}
-  .ipl-hero .hero-meta {font-size:12px;opacity:.84}
-  .ipl-stat-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px}
-  .ipl-stat {background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.13);border-radius:13px;padding:10px}
-  .ipl-stat strong {display:block;font-size:17px}.ipl-stat span{font-size:10px;opacity:.85}
-  .ipl-section-title {display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 2px 10px}
-  .ipl-section-title h3 {font-size:15px;font-weight:800;margin:0}
-  .ipl-year-select {border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;color:var(--text);font-weight:700;font-size:12px;max-width:145px}
-  .ipl-year-card {border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:9px;background:#fff}
-  .ipl-year-top {display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .ipl-year-top strong{font-size:16px}.ipl-year-top small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
-  .ipl-chip {border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;white-space:nowrap}
-  .ipl-chip.good{background:#e5f6e9;color:#237343}.ipl-chip.warn{background:#fff2d9;color:#8a5b11}.ipl-chip.neutral{background:#edf1ee;color:#66736b}
-  .ipl-progress {height:7px;background:#edf1ee;border-radius:99px;overflow:hidden;margin:12px 0 7px}
-  .ipl-progress span{display:block;height:100%;background:#198754;border-radius:99px}
-  .ipl-year-foot{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}
-  .ipl-month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-  .ipl-month{border:1px solid var(--line);border-radius:12px;padding:10px 7px;background:#fff;text-align:center;min-width:0}
-  .ipl-month strong{display:block;font-size:11px}.ipl-month span{display:block;font-size:10px;margin-top:5px;font-weight:800}
-  .ipl-month.paid{background:#eaf7ed;border-color:#d5eedb;color:#267445}
-  .ipl-month.pending{background:#fff7e6;border-color:#f2e4be;color:#936018}
-  .ipl-month.unpaid{background:#f7f9f7;color:#7c8981}
-  .ipl-history-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-  .ipl-history-row:last-child{border-bottom:0}
-  .ipl-history-icon{width:38px;height:38px;border-radius:12px;background:#e8f8ed;color:#0d6b49;display:grid;place-items:center;font-size:16px;flex-shrink:0}
-  .ipl-history-main{flex:1;min-width:0}.ipl-history-main strong{font-size:12px;display:block}.ipl-history-main small{font-size:10px;color:var(--muted);display:block;margin-top:3px}
-  .ipl-history-amount{font-size:12px;font-weight:800;white-space:nowrap}
-  .ipl-note{padding:12px;border-radius:13px;background:#f1f6f2;color:#65736a;font-size:11px;line-height:1.5;margin-top:12px}
-  .ipl-upload-cta{width:100%;border:0;background:#0d6b49;color:#fff;padding:14px;border-radius:14px;font-weight:800;margin-top:14px}
-  
   .soon { text-align: center; padding: 90px 20px; color: var(--muted); }
   .soon .big { width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 20px; display:flex; align-items:center; justify-content:center; background: var(--green-dark); color: var(--green-bright); }
-  .soon .big svg { width: 30px; height: 30px; }
-  @media (max-width: 360px) { .header h1 { font-size: 23px; } .container { padding: 0 12px; } .card { padding: 14px; } .menu-icon { width: 47px; height: 47px; } .menu-item { font-size: 10px; } .bottom-nav {width:calc(100% - 18px);padding-left:3px;padding-right:3px}.nav-btn{font-size:9px}.nav-btn.nav-add .ico{width:49px;height:49px}.calendar-days{gap:7px}.day-card{padding:9px 7px} }
-  @media(max-width:380px){.ipl-month-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ipl-stat{padding:8px}.ipl-stat strong{font-size:15px}}
 </style>
 </head>
 <body>
@@ -228,11 +151,11 @@
     <form id="form-login">
       <div class="form-group">
         <label for="login-blok">ID Blok / Nomor Rumah</label>
-        <input type="text" id="login-blok" placeholder="Contoh: AA/01" required>
+        <input type="text" id="login-blok" placeholder="Contoh: AE03 atau AE/03" required>
       </div>
       <div class="form-group">
         <label for="login-pin">PIN Keamanan (6 Digit)</label>
-        <input type="password" id="login-pin" maxlength="6" placeholder="******" required>
+        <input type="password" id="login-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="******" required>
       </div>
       <button type="submit" class="auth-btn">Masuk Portal</button>
     </form>
@@ -247,15 +170,15 @@
     <form id="form-signup">
       <div class="form-group">
         <label for="signup-blok">ID Blok / Nomor Rumah</label>
-        <input type="text" id="signup-blok" placeholder="Contoh: AA/01" required>
+        <input type="text" id="signup-blok" placeholder="Contoh: AE03 atau AE/03" required>
       </div>
       <div class="form-group">
         <label for="signup-hp">Nomor WhatsApp / HP</label>
-        <input type="tel" id="signup-hp" placeholder="08123456789" required>
+        <input type="tel" id="signup-hp" inputmode="numeric" pattern="[0-9]*" placeholder="08123456789" required>
       </div>
       <div class="form-group">
         <label for="signup-pin">Buat PIN Baru (6 Digit)</label>
-        <input type="password" id="signup-pin" maxlength="6" placeholder="******" required>
+        <input type="password" id="signup-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="******" required>
       </div>
       <button type="submit" class="auth-btn">Simpan PIN & Sign Up</button>
     </form>
@@ -310,19 +233,11 @@
     <div class="card">
       <div class="card-title"><span>Menu</span></div>
       <div class="menu-grid">
-        <button class="menu-item" data-goto="iuran"><div class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/><path d="M7 15h4" stroke="#0d6b49" stroke-width="2"/></svg></div>Iuran</button>
-        <button class="menu-item" data-goto="surat"><div class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.8h8l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 4v4h4M9 13h6M9 16.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>Ajukan Surat</button>
-        <button class="menu-item" data-goto="jadwal"><div class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m8 14 2 2 5-4" fill="none" stroke="#0d6b49" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Jadwal</button>
-        <button class="menu-item" data-goto="info"><div class="menu-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14V9.5a1.5 1.5 0 0 1 1.5-1.5H9l8-4v16l-8-4H5.5A1.5 1.5 0 0 1 4 14Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8 16 1.5 4h3L11 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M20 8.5a5 5 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>Info RT</button>
+        <button class="menu-item" data-goto="iuran"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.8"/><path d="M7 15h4" stroke="#0d6b49" stroke-width="2"/></svg></div>Iuran</button>
+        <button class="menu-item" data-goto="surat"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M6 3.8h8l4 4V20a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M14 4v4h4M9 13h6M9 16.5h6" stroke="currentColor" stroke-width="1.8"/></svg></div>Ajukan Surat</button>
+        <button class="menu-item" data-goto="jadwal"><div class="menu-icon"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16" stroke="currentColor" stroke-width="1.8"/></svg></div>Jadwal</button>
+        <button class="menu-item" data-goto="info"><div class="menu-icon"><svg viewBox="0 0 24 24"><path d="M4 14V9.5a1.5 1.5 0 0 1 1.5-1.5H9l8-4v16l-8-4H5.5A1.5 1.5 0 0 1 4 14Z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></div>Info RT</button>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">
-        <span>Jadwal lingkungan</span>
-        <a href="#" data-goto="jadwal">Kalender lengkap</a>
-      </div>
-      <div class="calendar-days" id="jadwal-list"></div>
     </div>
   </div>
 </section>
@@ -331,10 +246,10 @@
 <section id="view-iuran" class="hidden">
   <div class="header"><div class="top"><div><div class="title">Keuangan lingkungan</div><h1>Iuran IPL</h1><div class="sub">Rekap pembayaran dari awal program hingga sekarang</div></div></div></div>
   <div class="container">
-    <div class="ipl-hero">
-      <div class="eyebrow">Status IPL rumah Anda</div>
-      <div class="big-amount" id="ipl-history-total">Rp0</div>
-      <div class="hero-meta" id="ipl-history-address">Blok — · Rekap semua tahun</div>
+    <div class="ipl-hero" style="background:linear-gradient(135deg,#073f2e,#0d6b49);color:#fff;border-radius:22px;padding:20px;">
+      <div>Status IPL rumah Anda</div>
+      <div style="font-size:27px;font-weight:800;margin:6px 0" id="ipl-history-total">Rp0</div>
+      <div style="font-size:12px" id="ipl-history-address">Blok — · Rekap semua tahun</div>
     </div>
   </div>
 </section>
@@ -364,7 +279,7 @@
 </nav>
 
 <script>
-  // ===== 1. SUPABASE CLIENT CONFIGURATION =====
+  // ===== 1. SUPABASE CONFIGURATION =====
   const SUPABASE_URL = "https://zjufyupndlzjocbjgzgu.supabase.co";
   const SUPABASE_KEY = "sb_publishable_vW00WKdxvHwLqnEDiGvSOg_Lo5szIjg";
   const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -384,10 +299,15 @@
     lastScrollTop = scrollTop;
   }, { passive: true });
 
-  // ===== 3. AUTH LOGIC =====
+  // ===== 3. AUTH LOGIC (DIRECT DATABASE PIN) =====
   function toggleAuth(view) {
     document.getElementById("card-login").classList.toggle("hidden", view !== 'login');
     document.getElementById("card-signup").classList.toggle("hidden", view !== 'signup');
+  }
+
+  // Helper untuk membersihkan input ID Blok (AE/03 -> AE03)
+  function cleanBlokInput(input) {
+    return input.toUpperCase().replace(/[^A-Z0-9]/g, '');
   }
 
   window.addEventListener("load", async () => {
@@ -402,48 +322,36 @@
   // Handle Sign Up
   document.getElementById("form-signup").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const idBlok = document.getElementById("signup-blok").value.trim();
+    const rawBlok = document.getElementById("signup-blok").value.trim();
+    const cleanBlok = cleanBlokInput(rawBlok);
     const noHp = document.getElementById("signup-hp").value.trim();
     const pin = document.getElementById("signup-pin").value.trim();
 
     try {
-      // Pencarian fleksibel menggunakan ilike & maybeSingle
-      const { data: profile, error } = await _supabase
-        .from('profiles')
-        .select('*')
-        .ilike('id_blok', idBlok)
-        .maybeSingle();
-
+      // Ambil seluruh data profiles untuk dicocokkan tanpa karakter khusus
+      const { data: profiles, error } = await _supabase.from('profiles').select('*');
       if (error) throw error;
 
+      const profile = profiles.find(p => cleanBlokInput(p.id_blok) === cleanBlok);
+
       if (!profile) {
-        alert("ID Blok (" + idBlok + ") tidak ditemukan! Hubungi Pengurus RT.");
+        alert("ID Blok (" + rawBlok + ") tidak ditemukan! Hubungi Pengurus RT.");
         return;
       }
 
       if (profile.is_registered) {
-        alert("Akun untuk ID Blok " + idBlok + " sudah pernah didaftarkan. Silakan login.");
+        alert("Akun untuk ID Blok " + profile.id_blok + " sudah pernah didaftarkan. Silakan login.");
         toggleAuth('login');
         return;
       }
 
-      const internalEmail = `${profile.id_blok.replace('/', '.').toLowerCase()}.astonville@gmail.com`;
-      
-      const { data: authData, error: authError } = await _supabase.auth.signUp({
-        email: internalEmail,
-        password: pin,
-      });
-
-      if (authError) throw authError;
-
-      await _supabase
+      // Update PIN & No HP langsung ke database
+      const { error: updateErr } = await _supabase
         .from('profiles')
-        .update({ 
-          user_id: authData.user.id, 
-          no_hp: noHp, 
-          is_registered: true 
-        })
-        .ilike('id_blok', idBlok);
+        .update({ pin: pin, no_hp: noHp, is_registered: true })
+        .eq('id_blok', profile.id_blok);
+
+      if (updateErr) throw updateErr;
 
       alert("Aktivasi Akun Berhasil! Silakan Login menggunakan ID Blok & PIN Anda.");
       toggleAuth('login');
@@ -455,42 +363,43 @@
   // Handle Login
   document.getElementById("form-login").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const idBlok = document.getElementById("login-blok").value.trim();
+    const rawBlok = document.getElementById("login-blok").value.trim();
+    const cleanBlok = cleanBlokInput(rawBlok);
     const pin = document.getElementById("login-pin").value.trim();
 
     try {
-      const { data: profile, error: profErr } = await _supabase
-        .from('profiles')
-        .select('*')
-        .ilike('id_blok', idBlok)
-        .maybeSingle();
+      const { data: profiles, error } = await _supabase.from('profiles').select('*');
+      if (error) throw error;
 
-      if (profErr || !profile) {
+      const profile = profiles.find(p => cleanBlokInput(p.id_blok) === cleanBlok);
+
+      if (!profile) {
         alert("ID Blok tidak ditemukan!");
         return;
       }
 
-      const internalEmail = `${profile.id_blok.replace('/', '.').toLowerCase()}.astonville@gmail.com`;
-      
-      const { error: authError } = await _supabase.auth.signInWithPassword({
-        email: internalEmail,
-        password: pin,
-      });
+      if (!profile.is_registered || !profile.pin) {
+        alert("ID Blok (" + profile.id_blok + ") belum aktivasi PIN. Silakan Sign Up terlebih dahulu.");
+        toggleAuth('signup');
+        return;
+      }
 
-      if (authError) throw new Error("PIN Keamanan salah!");
+      if (profile.pin !== pin) {
+        alert("PIN Keamanan salah!");
+        return;
+      }
 
       localStorage.setItem("warga_session", JSON.stringify(profile));
       document.getElementById("auth-overlay").classList.add("hidden");
       updateUserUI(profile);
     } catch (err) {
-      alert(err.message);
+      alert("Gagal Login: " + err.message);
     }
   });
 
   // Logout
   document.getElementById("btn-logout")?.addEventListener("click", async () => {
     if (confirm("Apakah Anda yakin ingin keluar?")) {
-      await _supabase.auth.signOut();
       localStorage.removeItem("warga_session");
       location.reload();
     }
